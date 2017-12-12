@@ -10,9 +10,33 @@
 	 -->
 	 
 	<package name="basicstruts2" extends="struts-default">
+		<!-- 注册自定义拦截器 -->
+		<interceptors>
+			<interceptor name="bosLoginInterceptor" class="com.itheima.bos.web.interceptor.BOSLoginInterceptor">
+				<!-- 指定哪些方法不需要拦截器 -->
+				<param name="excludeMethods">login</param>
+			</interceptor>
+			
+			<!-- 定义拦截器栈 -->
+			<interceptor-stack name="mystack">
+				<interceptor-ref name="bosLoginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mystack"></default-interceptor-ref>
+		
+		<!-- 定义全局结果集 -->
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>
+		
 		<!-- 需要进行权限控制的页面访问 -->
 		<action name="page_*_*">
 			<result type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>
+		</action>
+		<action name="userAction_*" class="userAction" method="{1}">
+			<result name="login">/login.jsp</result>
+			<result name="home">/index.jsp</result>
 		</action>
 	</package>
 </struts>
