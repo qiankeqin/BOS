@@ -35,4 +35,7 @@
             <column name="remark" />
         </property>
     </class>
+    <query name="user.editpassword">
+    	UPDATE User SET password=? where id=?
+    </query>
 </hibernate-mapping>

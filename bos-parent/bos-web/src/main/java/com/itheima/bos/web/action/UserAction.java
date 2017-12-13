@@ -1,5 +1,7 @@
 package com.itheima.bos.web.action;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +15,7 @@ import org.springframework.web.context.support.ContextExposingHttpServletRequest
 
 import com.itheima.bos.domain.User;
 import com.itheima.bos.service.IUserService;
+import com.itheima.bos.utils.BOSUtils;
 import com.itheima.bos.web.base.BaseAction;
 
 
@@ -59,5 +62,22 @@ public class UserAction extends BaseAction<User> {
 	public String logout(){
 		ServletActionContext.getRequest().removeAttribute("user");
 		return LOGIN;
+	}
+	
+
+	//修改密码
+	public String editPassword() throws IOException{
+		String f = "1";
+		User user = BOSUtils.getLoginUser();
+		try{
+			userService.editPassword(user.getId(),model.getPassword());
+		}catch(Exception e){
+			f = "0";
+			e.printStackTrace();
+		}
+		//设置回写值的类型，这里直接以文本的形式回写
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		ServletActionContext.getResponse().getWriter().write(f);
+		return NONE;
 	}
 }
