@@ -7,6 +7,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 public class BaseAction<T> extends ActionSupport implements ModelDriven<T>{
+
+	protected final static String LIST = "list";
 	//模型对象
 	protected T model;
 	
