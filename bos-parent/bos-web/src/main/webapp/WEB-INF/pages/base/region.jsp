@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,6 +25,9 @@
 <script
 	src="${pageContext.request.contextPath }/js/easyui/locale/easyui-lang-zh_CN.js"
 	type="text/javascript"></script>
+<!-- 引入ocupload.js文件 -->
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.ocupload-1.1.2.js"></script>
+
 <script type="text/javascript">
 	function doAdd(){
 		$('#addRegionWindow').window("open");
@@ -99,7 +101,6 @@
 	$(function(){
 		// 先将body隐藏，再显示，不会出现页面刷新效果
 		$("body").css({visibility:"visible"});
-		
 		// 收派标准数据表格
 		$('#grid').datagrid( {
 			iconCls : 'icon-forward',
@@ -114,6 +115,13 @@
 			idField : 'id',
 			columns : columns,
 			onDblClickRow : doDblClickRow
+		});
+		
+		//必须在datagrid上的按钮加载完成后再去进行绑定
+		//页面加载完成后，调用OCUpload插件的方法
+		$("#button-import").upload({
+			action:'regionAction_importXls',
+			name:'regionFile'
 		});
 		
 		// 添加、修改区域窗口
