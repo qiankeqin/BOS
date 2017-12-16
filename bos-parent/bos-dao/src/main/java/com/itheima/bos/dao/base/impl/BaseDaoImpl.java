@@ -42,7 +42,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T>{
 	@Override
 	public void save(T entity) {
 		// TODO Auto-generated method stub
-		getHibernateTemplate().save(entity);
+		getHibernateTemplate().saveOrUpdate(entity);
 	}
 
 	@Override
@@ -104,5 +104,13 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T>{
 		List rows = this.getHibernateTemplate().findByCriteria(criteria, firstResult, maxResults);
 		pageBean.setRows(rows);			
 	}
+
+	@Override
+	public void saveList(List<T> list) {
+		// TODO Auto-generated method stub
+		//this.getHibernateTemplate().save(list);
+	}
+	
+	
 
 }
