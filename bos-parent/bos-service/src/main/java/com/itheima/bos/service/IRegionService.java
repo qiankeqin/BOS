@@ -11,4 +11,8 @@ public interface IRegionService {
 
 	void pageQuery(PageBean pageBean);
 
+	List<Region> findAll();
+
+	List<Region> findAllByQ(String q);
+
 }

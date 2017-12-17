@@ -20,8 +20,8 @@ public class Region  implements java.io.Serializable {
      private String postcode;
      private String shortcode;
      private String citycode;
+     private String name;//名称:省市区拼接而成
      private Set subareas = new HashSet(0);
-
 
     // Constructors
 
@@ -49,11 +49,17 @@ public class Region  implements java.io.Serializable {
    
     // Property accessors
 
+    
+    
     public String getId() {
         return this.id;
     }
     
-    public void setId(String id) {
+    public String getName() {
+		return province+city+district;
+	}
+
+	public void setId(String id) {
         this.id = id;
     }
 
@@ -112,9 +118,16 @@ public class Region  implements java.io.Serializable {
     public void setSubareas(Set subareas) {
         this.subareas = subareas;
     }
+
+	@Override
+	public String toString() {
+		return "Region [id=" + id + ",name="+name + ", province=" + province + ", city=" + city + ", district=" + district
+				+ ", postcode=" + postcode + ", shortcode=" + shortcode + ", citycode=" + citycode + ", name=" + name
+				+ ", subareas=" + subareas + "]";
+	}
    
 
-
+    
 
 
 

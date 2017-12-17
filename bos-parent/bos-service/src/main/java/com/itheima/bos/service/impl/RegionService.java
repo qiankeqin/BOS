@@ -33,5 +33,16 @@ public class RegionService implements IRegionService {
 		// TODO Auto-generated method stub
 		regionDao.pageQuery(pageBean);
 	}
+
+	@Override
+	public List<Region> findAll() {
+		return regionDao.findAll();
+	}
+
+	@Override
+	public List<Region> findAllByQ(String q) {
+		// TODO Auto-generated method stub
+		return regionDao.findAllByQ(q);
+	}
 	
 }

@@ -207,24 +207,36 @@
 		<div style="height:31px;overflow:hidden;" split="false" border="false" >
 			<div class="datagrid-toolbar">
 				<a id="save" icon="icon-save" href="#" class="easyui-linkbutton" plain="true" >保存</a>
+				<script type="text/javascript">
+					$(function(){
+						$("#save").click(function(){
+							//表单校验
+							var v = $("#addSubareaForm").form("validate");
+							if(v){
+								//校验通过
+								$("#addSubareaForm").submit();
+							}
+						})
+					})
+				</script>
 			</div>
 		</div>
 		
 		<div style="overflow:auto;padding:5px;" border="false">
-			<form>
+			<form id="addSubareaForm" method="post" action="${pageContext.request.contextPath }/subareaAction_add.action">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">分区信息</td>
 					</tr>
-					<tr>
+				<!-- 	<tr>
 						<td>分拣编码</td>
 						<td><input type="text" name="id" class="easyui-validatebox" required="true"/></td>
-					</tr>
+					</tr> -->
 					<tr>
 						<td>选择区域</td>
 						<td>
 							<input class="easyui-combobox" name="region.id"  
-    							data-options="valueField:'id',textField:'name',url:'json/standard.json'" />  
+    							data-options="valueField:'id',textField:'name',url:'${pageContext.request.contextPath }/regionAction_listajax.action',mode:'remote'" />  
 						</td>
 					</tr>
 					<tr>

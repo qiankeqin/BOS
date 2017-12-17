@@ -3,6 +3,7 @@ package com.itheima.bos.web.base;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
@@ -12,6 +13,7 @@ import com.itheima.bos.utils.PageBean;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
@@ -72,6 +74,22 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T>{
 		
 		ServletActionContext.getResponse().setContentType("text/json;charset=utf-8");
 		ServletActionContext.getResponse().getWriter().write(jsonStr);
+	}
+	
+	/**
+	 * ½«list×ª³Éjson×Ö·û´®
+	 * @param list
+	 * @param excludes
+	 * @throws IOException
+	 */
+	public void java2Json(List list,String[] excludes) throws IOException{
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(excludes);
+		String jsonStr = JSONArray.fromObject(list,jsonConfig).toString();
+		
+		ServletActionContext.getResponse().setContentType("text/json;charset=utf-8");
+		ServletActionContext.getResponse().getWriter().write(jsonStr);
+		
 	}
 	
 }

@@ -231,7 +231,7 @@
 				<tr>
 					<td style="width: 300px;">
 						<div style="color: #999; font-size: 8pt;">
-							传智播客 | Powered by <a href="http://www.itcast.cn/">itcast.cn</a>
+							zhejiang normal university | Powered by <a href="#qiankeqin">itcast.cn</a>
 						</div>
 					</td>
 					<td style="width: *;" class="co1"><span id="online"

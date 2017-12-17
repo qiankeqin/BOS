@@ -34,16 +34,22 @@
 		<action name="page_*_*">
 			<result type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>
 		</action>
+		<!-- 用户 -->
 		<action name="userAction_*" class="userAction" method="{1}">
 			<result name="login">/login.jsp</result>
 			<result name="home">/index.jsp</result>
 		</action>
+		<!-- 派送员 -->
 		<action name="staffAction_*" class="staffAction" method="{1}">
 			<result name="list">/WEB-INF/pages/base/staff.jsp</result>
 		</action>
+		<!-- 区域 -->
 		<action name="regionAction_*" class="regionAction" method="{1}">
 			<result name="list">/WEB-INF/pages/base/region.jsp</result>
 		</action>
-		
+		<!-- 分区 -->
+		<action name="subareaAction_*" class="subareaAction" method="{1}">
+			<result name="list">/WEB-INF/pages/base/subarea.jsp</result>
+		</action>
 	</package>
 </struts>
