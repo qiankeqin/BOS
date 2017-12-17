@@ -1,6 +1,10 @@
 package com.itheima.bos.service.impl;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +55,18 @@ public class StaffService implements IStaffService{
 	public void update(Staff entity) {
 		// TODO Auto-generated method stub
 		staffDao.update(entity);
+	}
+	
+	/**
+	 * 获取未删除的取派员
+	 */
+	@Override
+	public List<Staff> findListNotDelete() {
+		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Staff.class);
+		//添加过滤条件,deltag=0
+		detachedCriteria.add(Restrictions.eq("deltag","0"));
+		return staffDao.findByCriteria(detachedCriteria);
+		
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.transform.ResultTransformer;
 
 import com.itheima.bos.domain.Region;
 import com.itheima.bos.utils.PageBean;

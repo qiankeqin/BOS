@@ -1,6 +1,7 @@
 package com.itheima.bos.web.action;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
@@ -57,6 +58,10 @@ public class StaffAction extends BaseAction<Staff> implements ModelDriven<Staff>
 		return LIST;
 	}
 	
+	/**
+	 * 编辑功能
+	 * @return
+	 */
 	public String edit(){
 		//先查询数据库，根据id查询原始数据
 		Staff updateModel = staffService.findById(model.getId());
@@ -70,6 +75,17 @@ public class StaffAction extends BaseAction<Staff> implements ModelDriven<Staff>
 		
 		staffService.update(updateModel);
 		return LIST;
+	}
+	
+	/**
+	 * 查询所有未删除的取派员，返回json数据
+	 * @return
+	 * @throws IOException 
+	 */
+	public String listajax() throws IOException{
+		List<Staff> list = staffService.findListNotDelete();
+		this.java2Json(list, new String[]{"decidedzones"});
+		return NONE;
 	}
 	
 

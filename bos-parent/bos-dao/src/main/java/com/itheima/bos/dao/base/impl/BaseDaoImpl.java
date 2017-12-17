@@ -17,7 +17,7 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import com.itheima.bos.dao.base.IBaseDao;
 import com.itheima.bos.utils.PageBean;
 
-public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T>{
+public class BaseDaoImpl<T> extends HibernateDaoSupport{
 
 	//代表某个实体的类型
 	private Class<T> entityClass;
@@ -38,31 +38,31 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T>{
 		Type[] actualTypeArguments = superclass.getActualTypeArguments();
 		entityClass = (Class<T>) actualTypeArguments[0];
 	}
-	
-	@Override
+
+
 	public void save(T entity) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().saveOrUpdate(entity);
 	}
 
-	@Override
+
 	public void delete(T entity) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().delete(entity);
 	}
 
-	@Override
+
 	public void update(T entity) {
 		// TODO Auto-generated method stub
 		getHibernateTemplate().update(entity);
 	}
 
-	@Override
+
 	public T findById(Serializable id) {
 		return getHibernateTemplate().get(entityClass, id);
 	}
 
-	@Override
+
 	public List<T> findAll() {
 		String hsql = "FROM "+entityClass.getSimpleName();
 		return (List<T>) getHibernateTemplate().find(hsql);
@@ -70,7 +70,6 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T>{
 
 	//queryName是执行的sql
 	//objects是sql的参数
-	@Override
 	public void executeUpdate(String queryName, Object... objects) {
 		 Session session = this.getSessionFactory().getCurrentSession();
 		 //相当于session.createQuery("update xxxx");
@@ -84,7 +83,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T>{
 		 query.executeUpdate();		 
 	}
 
-	@Override
+
 	public void pageQuery(PageBean pageBean) {
 		int pageSize = pageBean.getPageSize();
 		int currentPage = pageBean.getCurrentPage();
@@ -101,14 +100,21 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T>{
 		int firstResult = (currentPage-1)*pageSize;
 		int maxResults = pageSize;  
 		criteria.setProjection(null);//清空projectiion，这样，就不会以rowcount的形式查询了。
+		criteria.setResultTransformer(DetachedCriteria.ROOT_ENTITY);
 		List rows = this.getHibernateTemplate().findByCriteria(criteria, firstResult, maxResults);
 		pageBean.setRows(rows);			
 	}
 
-	@Override
+
 	public void saveList(List<T> list) {
 		// TODO Auto-generated method stub
 		//this.getHibernateTemplate().save(list);
+	}
+
+
+	public List<T> findByCriteria(DetachedCriteria detachedCriteria) {
+		
+		return (List<T>) this.getHibernateTemplate().findByCriteria(detachedCriteria);
 	}
 	
 	
