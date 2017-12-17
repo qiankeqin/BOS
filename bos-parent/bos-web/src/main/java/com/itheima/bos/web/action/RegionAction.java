@@ -12,14 +12,21 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.struts2.ServletActionContext;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.itheima.bos.domain.Region;
 import com.itheima.bos.service.IRegionService;
+import com.itheima.bos.utils.PageBean;
 import com.itheima.bos.utils.PinYin4jUtils;
+import com.itheima.bos.web.base.BaseAction;
 import com.opensymphony.xwork2.ActionSupport;
+
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 /**
  * 区域Action
@@ -28,7 +35,7 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @Controller("regionAction")
 @Scope("prototype")
-public class RegionAction extends ActionSupport{
+public class RegionAction extends BaseAction<Region>{
 	
 	@Autowired
 	private IRegionService regionService;
@@ -78,11 +85,21 @@ public class RegionAction extends ActionSupport{
 		return NONE;
 	}
 	
-	
+	public String pageQuery() throws IOException{
+		regionService.pageQuery(pageBean);
+		//将pageBean对象转换成json字符串，并响应到界面上
+		java2Json(pageBean,new String[]{"currentPage","detachedCriteria","pageSize"});
+		return NONE;
+	}
 	
 	
 	public void setRegionFile(File regionFile) {
 		this.regionFile = regionFile;
 	}
+	
+	
+
+	
+	
 	
 }

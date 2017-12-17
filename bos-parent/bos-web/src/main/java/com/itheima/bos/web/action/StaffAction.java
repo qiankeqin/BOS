@@ -37,34 +37,15 @@ public class StaffAction extends BaseAction<Staff> implements ModelDriven<Staff>
 		return LIST;
 	}
 	
-	private int page;
-	private int rows;
 	
 	/**
 	 * 分页查询
 	 * @throws IOException 
 	 */
 	public String pageQuery() throws IOException{
-		//构建pageBean
-		PageBean pageBean = new PageBean();
-		pageBean.setPageSize(rows);
-		pageBean.setCurrentPage(page);
-		//查询条件
-		DetachedCriteria criteria = DetachedCriteria.forClass(Staff.class);
-		pageBean.setDetachedCriteria(criteria);
 		staffService.pageQuery(pageBean);
-		
-		//将pageBean中的对象封装成json，通过输出流写回页面
-		//这里使用json-lib
-		//JSONObject--将单一对象转为json
-		//JSONArray--将数组或则集合对象转为json
-		JsonConfig jsonConfig = new JsonConfig();
-		//指定哪些属性不需要转json
-		jsonConfig.setExcludes(new String[]{"currentPage","detachedCriteria","pageSize"});
-		JSONObject jsonObj = JSONObject.fromObject(pageBean,jsonConfig);
-		String jsonStr = jsonObj.toString();
-		ServletActionContext.getResponse().setContentType("text/json;charset=utf-8");
-		ServletActionContext.getResponse().getWriter().write(jsonStr);
+		//将pageBean对象转换成json字符串，并响应到界面上
+		java2Json(pageBean,new String[]{"currentPage","detachedCriteria","pageSize"});
 		return NONE;
 	}
 	
@@ -92,13 +73,6 @@ public class StaffAction extends BaseAction<Staff> implements ModelDriven<Staff>
 	}
 	
 
-	public void setPage(int page) {
-		this.page = page;
-	}
-
-	public void setRows(int rows) {
-		this.rows = rows;
-	}
 
 	public void setIds(String ids) {
 		this.ids = ids;

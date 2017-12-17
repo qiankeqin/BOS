@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.itheima.bos.dao.IRegionDao;
 import com.itheima.bos.domain.Region;
 import com.itheima.bos.service.IRegionService;
+import com.itheima.bos.utils.PageBean;
 
 @Service("regionService")
 @Transactional
@@ -24,6 +25,13 @@ public class RegionService implements IRegionService {
 		for(Region region : regionList){
 			regionDao.save(region);
 		}
+	}
+
+	//∑÷“≥≤È—Ø
+	@Override
+	public void pageQuery(PageBean pageBean) {
+		// TODO Auto-generated method stub
+		regionDao.pageQuery(pageBean);
 	}
 	
 }
