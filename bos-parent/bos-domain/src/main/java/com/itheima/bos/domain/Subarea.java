@@ -112,7 +112,9 @@ public class Subarea  implements java.io.Serializable {
    
 
 
-
+    public String getSubareaid(){
+    	return id;
+    }
 
 
 
