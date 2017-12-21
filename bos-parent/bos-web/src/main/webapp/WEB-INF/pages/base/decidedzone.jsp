@@ -44,7 +44,38 @@
 	}
 	
 	function doAssociations(){
-		$('#customerWindow').window('open');
+		//$('#customerWindow').window('open');
+		var rows = $("#grid").datagrid("getSelections");
+		if(rows.length!=1){
+			$.messager.alert("提示信息","请选择一个定区操作！","warning");
+		}
+		else{
+			//清空
+			$("#noassociationSelect").empty();
+			$("#associationSelect").empty();
+			//选中了一个定区
+			$('#customerWindow').window('open');
+			//发送ajax请求，绑定数据
+			$.post("decidedzoneAction_findListNotAssociation.action",{},function(data){
+				for(var i=0;i<data.length;i++){
+					var id = data[i].id;
+					var name=data[i].name;
+					var tel = data[i].telephone;
+					name = name+"("+tel+")";
+					$("#noassociationSelect").append("<option value='"+id+"'>"+name+"</option>");
+				}
+			},"json");
+			//发送ajax请求，绑定数据
+			$.post("decidedzoneAction_findListHasAssociation.action",{id:rows[0].id},function(data){
+				for(var i=0;i<data.length;i++){
+					var id = data[i].id;
+					var name=data[i].name;
+					var tel = data[i].telephone;
+					name = name+"("+tel+")";
+					$("#associationSelect").append("<option value='"+id+"'>"+name+"</option>");
+				}
+			},"json");
+		}
 	}
 	
 	//工具栏
@@ -367,7 +398,7 @@
 	</div>
 	
 	<!-- 关联客户窗口 -->
-	<div class="easyui-window" title="关联客户窗口" id="customerWindow" collapsible="false" closed="true" minimizable="false" maximizable="false" style="top:20px;left:200px;width: 400px;height: 300px;">
+	<div modal=true class="easyui-window" title="关联客户窗口" id="customerWindow" collapsible="false" closed="true" minimizable="false" maximizable="false" style="top:20px;left:200px;width: 400px;height: 300px;">
 		<div style="overflow:auto;padding:5px;" border="false">
 			<form id="customerForm" action="${pageContext.request.contextPath }/decidedzone_assigncustomerstodecidedzone.action" method="post">
 				<table class="table-edit" width="80%" align="center">

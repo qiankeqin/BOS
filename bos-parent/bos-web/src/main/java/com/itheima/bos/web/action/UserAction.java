@@ -1,6 +1,7 @@
 package com.itheima.bos.web.action;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -17,23 +18,29 @@ import com.itheima.bos.domain.User;
 import com.itheima.bos.service.IUserService;
 import com.itheima.bos.utils.BOSUtils;
 import com.itheima.bos.web.base.BaseAction;
+import com.itheima.crm.Customer;
+import com.itheima.crm.ICustomerService;
 
 
 @Controller("userAction")
 @Scope("prototype")
 public class UserAction extends BaseAction<User> {
 
-	private final static String HOME = "home";
+	//webservice
+	@Autowired
+	ICustomerService customerService;
+
+	@Autowired
+	IUserService userService;
+	
+
 	//属性驱动,验证码
 	private String checkcode;
-	
 	
 	public void setCheckcode(String checkcode) {
 		this.checkcode = checkcode;
 	}
-
-	@Autowired
-	IUserService userService;
+	
 
 	//登陆方法
 	public String login() throws Exception {

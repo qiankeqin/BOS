@@ -4,6 +4,8 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:soap="http://cxf.apache.org/bindings/soap"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 						http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/context
@@ -11,7 +13,11 @@
 						http://www.springframework.org/schema/aop
 						http://www.springframework.org/schema/aop/spring-aop.xsd
 						http://www.springframework.org/schema/tx 
-						http://www.springframework.org/schema/tx/spring-tx.xsd">
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://cxf.apache.org/bindings/soap 
+						http://cxf.apache.org/schemas/configuration/soap.xsd
+						http://cxf.apache.org/jaxws 
+						http://cxf.apache.org/schemas/jaxws.xsd">
 	<!-- 加载属性文件 -->
 	<context:property-placeholder location="classpath:db.properties"/>
 	
@@ -58,6 +64,14 @@
 	
 	<!-- 注解扫描 -->
 	<context:component-scan base-package="com.itheima.bos"></context:component-scan>
+	
+	<!-- 注册crm客户端代理对象 -->
+	<jaxws:client id="crmClient"
+		serviceClass="com.itheima.crm.ICustomerService"
+		address="http://192.168.1.8:8080/crm_heima32_service/service/customer">
+	</jaxws:client>
+	
+	
 	
 </beans>					
 						

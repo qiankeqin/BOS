@@ -20,6 +20,7 @@ import net.sf.json.JsonConfig;
 
 public class BaseAction<T> extends ActionSupport implements ModelDriven<T>{
 
+	protected final static String HOME = "home";
 	protected final static String LIST = "list";
 
 	//·ÖÒ³Êý¾Ý

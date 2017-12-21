@@ -1,6 +1,7 @@
 package com.itheima.bos.web.action;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import com.itheima.bos.domain.Decidedzone;
 import com.itheima.bos.service.IDecidedzoneService;
 import com.itheima.bos.web.base.BaseAction;
+import com.itheima.crm.Customer;
+import com.itheima.crm.ICustomerService;
 /**
  * 定区
  * @author qiankeqin
@@ -57,5 +60,23 @@ public class DecidedzoneAction extends BaseAction<Decidedzone>{
 		java2Json(pageBean, new String[]{"currentPage","detachedCriteria","pageSize","subareas","decidedzones"});
 		return NONE;
 	}
+
+	//注入代理对象
+	@Autowired
+	private ICustomerService proxy;
 	
+	//获取未关联的用户
+	public String findListNotAssociation() throws IOException{
+		List<Customer> list = proxy.findListNotAssociation();
+		this.java2Json(list, new String[]{});
+		return NONE;
+	}
+	
+	//获取该定区中已关联的用户
+	public String findListHasAssociation() throws IOException{
+		List<Customer> list = proxy.findListHasAssociation(model.getId());
+		System.out.println(model.getId());
+		this.java2Json(list, new String[]{});
+		return NONE;
+	}
 }
