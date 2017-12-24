@@ -39,8 +39,8 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="hibernate.hbm2dll.auto">update</prop>
-				<prop key="show_sql">true</prop>
-				<prop key="format_sql">true</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
 			</props>
 		</property>
 		<!-- 注入hibernate的映射文件 -->

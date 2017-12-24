@@ -56,5 +56,19 @@ public class SubareaService implements ISubareaService{
 		detachedCriteria.add(Restrictions.isNull("decidedzone"));
 		return subareaDao.findByCriteria(detachedCriteria);
 	}
+
+	/**
+	 * 根据定区id获取分区list
+	 */
+	@Override
+	public List<Subarea> findListByDecidedzoneId(String decidedzoneId) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(Subarea.class);
+		//添加过滤条件,注意：如果时join两张表的时候，需要用到别名
+		//如果需要发送join请求，请求其他表中的数据，那么就需要添加表的别名
+		//定区id，存在于分区中，所以此时不需要join连接，如果用到定区name查询，那么就需要使用别名了
+		criteria.add(Restrictions.eq("decidedzone.id", decidedzoneId));
+		List<Subarea> list = subareaDao.findByCriteria(criteria);
+		return list;
+	}
 	
 }

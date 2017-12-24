@@ -124,4 +124,21 @@ public class SubareaAction extends BaseAction<Subarea>{
 		return NONE;
 	}
 	
+	private String decidedzoneId;
+	
+	public void setDecidedzoneId(String decidedzoneId) {
+		this.decidedzoneId = decidedzoneId;
+	}
+
+	/**
+	 * 根据定区id查询关联的分区
+	 * @return
+	 * @throws IOException 
+	 */
+	public String findListByDecidedzoneId() throws IOException{
+		List<Subarea> list = subareaService.findListByDecidedzoneId(decidedzoneId);
+		this.java2Json(list, new String[]{"decidedzone","subareas"});
+		return NONE;
+	}
+	
 }

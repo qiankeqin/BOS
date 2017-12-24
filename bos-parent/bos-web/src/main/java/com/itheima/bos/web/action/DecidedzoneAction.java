@@ -79,4 +79,22 @@ public class DecidedzoneAction extends BaseAction<Decidedzone>{
 		this.java2Json(list, new String[]{});
 		return NONE;
 	}
+	
+	//属性驱动，接收页面提交的多个客户id
+	private List<Integer> customerIds;
+	
+	public void setCustomerIds(List<Integer> customerIds) {
+		this.customerIds = customerIds;
+	}
+
+	/**
+	 * 定区关联客户：调用crm服务，将客户关联到定区
+	 * @return
+	 */
+	public String assigncustomerstodecidedzone(){
+		proxy.assigncustomerstodecidedzone(model.getId(), customerIds);
+		return LIST;
+	}
+	
+	
 }

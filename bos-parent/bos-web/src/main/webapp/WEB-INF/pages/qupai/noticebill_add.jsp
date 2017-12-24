@@ -37,6 +37,32 @@
 				$('#noticebillForm').submit();
 			}
 		});
+		
+		//页面加载成功后，为手机号绑定离开焦点事件
+		$("input[name=telephone]").blur(function(){
+			//获取页面输入的手机号
+			var telephone = this.value;
+			//发送ajax请求，请求Action，在Action中远程调用crm服务，获取客户信息，用于页面回显
+			$.get("noticebillAction_findCustomerByTelephone.action",{"telephone":telephone},function(data){
+				//绑定到页面上
+				if(data!=null){
+					//查询到客户信息，进行数据回显
+					var customerId = data.id;
+					var customerName = data.name;
+					var address = data.address;
+					$("input[name=customerId]").val(customerId);
+					$("input[name=customerName]").val(customerName);
+					$("input[name=delegater]").val(customerName);
+					$("input[name=pickaddress]").val(address);
+				}
+				else{
+					$("input[name=customerId]").val("");
+					$("input[name=customerName]").val("");
+					$("input[name=customerName]").val("");	
+					$("input[name=pickaddress]").val("");				
+				}
+			},"json")
+		});
 	});
 </script>
 </head>
@@ -51,26 +77,26 @@
 		</div>
 	</div>
 	<div region="center" style="overflow:auto;padding:5px;" border="false">
-		<form id="noticebillForm" action="" method="post">
-			<table class="table-edit" width="95%" align="center">
+		<form id="noticebillForm" action="noticebillAction_add" method="post">
+			<table class="table-edit" width="100%" align="center">
 				<tr class="title">
 					<td colspan="4">客户信息</td>
 				</tr>
 				<tr>
 					<td>来电号码:</td>
-					<td><input type="text" class="easyui-validatebox" name="telephone"
+					<td><input type="text" class="easyui-validatebox" name="telephone" id="telephone"
 						required="true" /></td>
 					<td>客户编号:</td>
 					<td><input type="text" class="easyui-validatebox"  name="customerId"
-						required="true" /></td>
+						 /></td>
 				</tr>
 				<tr>
 					<td>客户姓名:</td>
 					<td><input type="text" class="easyui-validatebox" name="customerName"
-						required="true" /></td>
+						 /></td>
 					<td>联系人:</td>
 					<td><input type="text" class="easyui-validatebox" name="delegater"
-						required="true" /></td>
+						 /></td>
 				</tr>
 				<tr class="title">
 					<td colspan="4">货物信息</td>
@@ -78,18 +104,18 @@
 				<tr>
 					<td>品名:</td>
 					<td><input type="text" class="easyui-validatebox" name="product"
-						required="true" /></td>
+						 /></td>
 					<td>件数:</td>
 					<td><input type="text" class="easyui-numberbox" name="num"
-						required="true" /></td>
+						 /></td>
 				</tr>
 				<tr>
 					<td>重量:</td>
 					<td><input type="text" class="easyui-numberbox" name="weight"
-						required="true" /></td>
+					  /></td>
 					<td>体积:</td>
 					<td><input type="text" class="easyui-validatebox" name="volume"
-						required="true" /></td>
+						/></td>
 				</tr>
 				<tr>
 					<td>取件地址</td>
@@ -99,7 +125,7 @@
 				<tr>
 					<td>到达城市:</td>
 					<td><input type="text" class="easyui-validatebox" name="arrivecity"
-						required="true" /></td>
+						 /></td>
 					<td>预约取件时间:</td>
 					<td><input type="text" class="easyui-datebox" name="pickdate"
 						data-options="required:true, editable:false" /></td>
@@ -107,7 +133,7 @@
 				<tr>
 					<td>备注:</td>
 					<td colspan="3"><textarea rows="5" cols="80" type="text" class="easyui-validatebox" name="remark"
-						required="true" ></textarea></td>
+						 ></textarea></td>
 				</tr>
 			</table>
 		</form>

@@ -50,6 +50,7 @@
 			$.messager.alert("提示信息","请选择一个定区操作！","warning");
 		}
 		else{
+			$("#customerDecidedZoneId").val(rows[0].id);//设置弹框中的隐藏域
 			//清空
 			$("#noassociationSelect").empty();
 			$("#associationSelect").empty();
@@ -159,6 +160,7 @@
 			url : "${pageContext.request.contextPath}/decidedzoneAction_pageQuery",
 			idField : 'id',
 			columns : columns,
+			//未数据表格绑定双击事件
 			onDblClickRow : doDblClickRow
 		});
 		
@@ -217,14 +219,14 @@
 		});
 	});
 
-	function doDblClickRow(){
-		alert("双击表格数据...");
+	//datagrid中可以获取到选中行index，data
+	function doDblClickRow(index,data){
 		$('#association_subarea').datagrid( {
 			fit : true,
 			border : true,
 			rownumbers : true,
 			striped : true,
-			url : "json/association_subarea.json",
+			url : "subareaAction_findListByDecidedzoneId.action?decidedzoneId="+data.id,
 			columns : [ [{
 				field : 'id',
 				title : '分拣编号',
@@ -286,7 +288,7 @@
 			border : true,
 			rownumbers : true,
 			striped : true,
-			url : "json/association_customer.json",
+			url : "decidedzoneAction_findListHasAssociation.action?id="+data.id,
 			columns : [[{
 				field : 'id',
 				title : '客户编号',
@@ -400,7 +402,7 @@
 	<!-- 关联客户窗口 -->
 	<div modal=true class="easyui-window" title="关联客户窗口" id="customerWindow" collapsible="false" closed="true" minimizable="false" maximizable="false" style="top:20px;left:200px;width: 400px;height: 300px;">
 		<div style="overflow:auto;padding:5px;" border="false">
-			<form id="customerForm" action="${pageContext.request.contextPath }/decidedzone_assigncustomerstodecidedzone.action" method="post">
+			<form id="customerForm" action="${pageContext.request.contextPath }/decidedzoneAction_assigncustomerstodecidedzone.action" method="post">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="3">关联客户</td>
@@ -413,6 +415,20 @@
 						<td>
 							<input type="button" value="》》" id="toRight"><br/>
 							<input type="button" value="《《" id="toLeft">
+							<script type="text/javascript">
+								$(function(){
+									$("#toRight").click(function(){
+										$("#associationSelect").append($("#noassociationSelect option:selected"));
+									});
+									$("#toLeft").click(function(){
+										$("#noassociationSelect").append($("#associationSelect option:selected"));
+									});
+									$("#associationBtn").click(function(){
+										$("#associationSelect option").attr("selected","selected");
+										$("#customerForm").submit();
+									})
+								})
+							</script>
 						</td>
 						<td>
 							<select id="associationSelect" name="customerIds" multiple="multiple" size="10"></select>

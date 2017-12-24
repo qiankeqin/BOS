@@ -37,6 +37,20 @@ public interface ICustomerService {
 
     /**
      * 
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "findDecidedzoneIdByAddress", targetNamespace = "http://service.itheima.com/", className = "com.itheima.crm.FindDecidedzoneIdByAddress")
+    @ResponseWrapper(localName = "findDecidedzoneIdByAddressResponse", targetNamespace = "http://service.itheima.com/", className = "com.itheima.crm.FindDecidedzoneIdByAddressResponse")
+    public String findDecidedzoneIdByAddress(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
      * @return
      *     returns java.util.List<com.itheima.crm.Customer>
      */
@@ -57,6 +71,34 @@ public interface ICustomerService {
     @RequestWrapper(localName = "findListHasAssociation", targetNamespace = "http://service.itheima.com/", className = "com.itheima.crm.FindListHasAssociation")
     @ResponseWrapper(localName = "findListHasAssociationResponse", targetNamespace = "http://service.itheima.com/", className = "com.itheima.crm.FindListHasAssociationResponse")
     public List<Customer> findListHasAssociation(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @RequestWrapper(localName = "assigncustomerstodecidedzone", targetNamespace = "http://service.itheima.com/", className = "com.itheima.crm.Assigncustomerstodecidedzone")
+    @ResponseWrapper(localName = "assigncustomerstodecidedzoneResponse", targetNamespace = "http://service.itheima.com/", className = "com.itheima.crm.AssigncustomerstodecidedzoneResponse")
+    public void assigncustomerstodecidedzone(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        List<Integer> arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns com.itheima.crm.Customer
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "findCustomerByTelephone", targetNamespace = "http://service.itheima.com/", className = "com.itheima.crm.FindCustomerByTelephone")
+    @ResponseWrapper(localName = "findCustomerByTelephoneResponse", targetNamespace = "http://service.itheima.com/", className = "com.itheima.crm.FindCustomerByTelephoneResponse")
+    public Customer findCustomerByTelephone(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
