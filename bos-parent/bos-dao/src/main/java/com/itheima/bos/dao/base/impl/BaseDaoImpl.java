@@ -117,6 +117,9 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport{
 		return (List<T>) this.getHibernateTemplate().findByCriteria(detachedCriteria);
 	}
 	
-	
+	//ĞÂÔö²Ù×÷
+	public void insert(T model){
+		this.getHibernateTemplate().save(model);
+	}
 
 }

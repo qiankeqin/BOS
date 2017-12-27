@@ -57,7 +57,11 @@
 		</action>
 		<!-- 业务通知单 -->
 		<action name="noticebillAction_*" class="noticebillAction" method="{1}">
-			<result name="list">/WEB-INF/pages/qupai/noticebill.jsp</result>
+			<result name="noticebill_add">/WEB-INF/pages/qupai/noticebill_add.jsp</result>
+		</action>
+		<!-- 业务通知单 -->
+		<action name="workordermanageAction_*" class="workordermanageAction" method="{1}">
+			<result name="list">/WEB-INF/pages/qupai/quickworkorder.jsp</result>
 		</action>
 	</package>
 </struts>

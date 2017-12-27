@@ -38,6 +38,6 @@ public class NoticebillAction extends BaseAction<Noticebill>{
 	 */
 	public String add(){
 		noticebillService.save(model);
-		return LIST;
+		return "noticebill_add";
 	}
 }
