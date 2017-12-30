@@ -71,7 +71,44 @@
 		address="http://192.168.1.8:8080/crm_heima32_service/service/customer">
 	</jaxws:client>
 	
+	<!-- 配置shiro框架的过滤器工厂对象 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 注入安全管理器对象 -->
+		<property name="securityManager" ref="securityManager"></property>
+		<!-- 注入相关页面访问url -->
+		<!-- 登陆页面 -->
+		<property name="loginUrl" value="/login.jsp"></property>
+		<!-- 登陆成功后，验证成功时跳转页面 -->
+		<property name="successUrl" value="/index.jsp"></property>
+		<!-- 权限不足时跳转页面 -->
+		<property name="unauthorizedUrl" value="/unauthorized.jsp"></property>
+		<!-- 
+			注入URL拦截规则
+				**代表子目录及子孙目录下的所有的资源匹配
+				*表示通配符匹配
+				authoc:检查用户是否已经登陆
+				anon：不进行过滤
+		 -->
+		<property name="filterChainDefinitions">
+			<value>
+				<!-- /css/**   /js/**  等表示css目录下以及子目录，子孙目录等等的所有资源都不进行校验过滤 -->
+				/css/** = anon
+				/js/** = anon
+				/images/** = anon
+				/validatecode.jsp* = anon
+				/userAction_login = anon
+				<!-- 进行权限验证，如果登陆的用户含有staff-list权限，那么就可以进行访问action，如果没有，那么跳转到/unauthorized.jsp页面 -->
+				/page_base_staff.action = perms["staff-list"]
+				/* = authc
+			</value>
+		</property>
+	</bean>
 	
-	
+	<!-- 注册安全管理器对象 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="bosRealm"></property>
+	</bean>
+	<bean id="bosRealm" class="com.itheima.bos.realm.BOSRealm">
+	</bean>
 </beans>					
 						
