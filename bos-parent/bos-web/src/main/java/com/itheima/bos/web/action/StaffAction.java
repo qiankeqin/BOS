@@ -3,6 +3,9 @@ package com.itheima.bos.web.action;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +49,18 @@ public class StaffAction extends BaseAction<Staff> implements ModelDriven<Staff>
 	public String pageQuery() throws IOException{
 		staffService.pageQuery(pageBean);
 		//将pageBean对象转换成json字符串，并响应到界面上
-		java2Json(pageBean,new String[]{"currentPage","detachedCriteria","pageSize"});
+		java2Json(pageBean,new String[]{"currentPage","detachedCriteria","pageSize","decidedzones"});
 		return NONE;
 	}
 	
 	//批量删除的参数
 	private String ids;
 	
+	/**
+	 * 批量删除
+	 * @return
+	 */
+	@RequiresPermissions("staff-delete")//执行这个方法，需要当前用户具有staff-delete权限
 	public String deleteBatch(){
 		staffService.deleteBatch(ids);
 		return LIST;
@@ -63,6 +71,8 @@ public class StaffAction extends BaseAction<Staff> implements ModelDriven<Staff>
 	 * @return
 	 */
 	public String edit(){
+		Subject subject = SecurityUtils.getSubject();
+		subject.checkPermission("staff-edit");
 		//先查询数据库，根据id查询原始数据
 		Staff updateModel = staffService.findById(model.getId());
 		

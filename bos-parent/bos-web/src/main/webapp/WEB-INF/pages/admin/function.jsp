@@ -39,12 +39,20 @@
 					}
 				}           
 			],
-			url : '',
+			iconCls : 'icon-forward',
+			fit : true,
+			border : true,
+			rownumbers : true,
+			striped : true,
+			pageList: [10,20,100],
+			pagination : true,
+			url : 'functionAction_list.action',
 			columns : [[
 			  {
-				  field : 'id',
-				  title : '编号',
-				  width : 200
+				  field : 'code',
+				  title : '关键字',
+				  width : 200,
+				  checkbox:true
 			  },
 			  {
 				  field : 'name',
@@ -59,7 +67,15 @@
 			  {
 				  field : 'generateMenu',
 				  title : '是否生成菜单',
-				  width : 200
+				  width : 200,
+				  formatter:function(data,row,index){
+					  if(data=="1"){
+						  return "是";
+					  }
+					  else{
+						  return "否";
+					  }
+				  }
 			  },  
 			  {
 				  field : 'zindex',

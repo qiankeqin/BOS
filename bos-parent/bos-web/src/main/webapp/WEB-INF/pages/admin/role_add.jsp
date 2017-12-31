@@ -45,16 +45,17 @@
 					enable : true
 				}
 			},
-			check : {
+			check : { //使用ztree的勾选效果
 				enable : true,
 			}
 		};
 		
 		$.ajax({
-			url : '${pageContext.request.contextPath}/json/menu.json',
+			url : '${pageContext.request.contextPath}/functionAction_listajax.action',
 			type : 'POST',
 			dataType : 'text',
 			success : function(data) {
+				//eval：将data转为json对象,这里没有必要做这一步，返回的data可以直接是json对象
 				var zNodes = eval("(" + data + ")");
 				$.fn.zTree.init($("#functionTree"), setting, zNodes);
 			},
@@ -67,7 +68,22 @@
 		
 		// 点击保存
 		$('#save').click(function(){
-			location.href='${pageContext.request.contextPath}/page_admin_privilege.action';
+			var v = $("#roleForm").form("validate");
+			if(v){
+				//根据ztree的id获取ztree对象
+				var treeObj = $.fn.zTree.getZTreeObj("functionTree");
+				//获取ztree上选中的节点，返回数组对象
+				var nodes = treeObj.getCheckedNodes(true);
+				var array = new Array();
+				for(var i=0;i<nodes.length;i++){
+					var id = nodes[i].id;
+					array.push(id);
+				}
+				var functionIds = array.join(",");
+				//为隐藏域赋值
+				$("input[name=functionIds]").val(functionIds);
+				$("#roleForm").submit();
+			}
 		});
 	});
 </script>	
@@ -79,15 +95,16 @@
 			</div>
 		</div>
 		<div region="center" style="overflow:auto;padding:5px;" border="false">
-			<form id="roleForm" method="post">
+			<form id="roleForm" method="post" action="roleAction_add.action">
+				<input type="hidden" name="functionIds"/>
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">角色信息</td>
 					</tr>
 					<tr>
-						<td width="200">编号</td>
+						<td width="200">关键字</td>
 						<td>
-							<input type="text" name="id" class="easyui-validatebox" data-options="required:true" />						
+							<input type="text" name="code" class="easyui-validatebox" data-options="required:true" />						
 						</td>
 					</tr>
 					<tr>

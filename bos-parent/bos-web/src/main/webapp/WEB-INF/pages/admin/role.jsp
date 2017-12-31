@@ -47,11 +47,11 @@
 					}
 				}           
 			],
-			url : '',
+			url : '${pageContext.request.contextPath}/roleAction_list.action',
 			columns : [[
 				{
-					field : 'id',
-					title : '编号',
+					field : 'code',
+					title : '关键字',
 					width : 200
 				},
 				{

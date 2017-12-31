@@ -1,5 +1,6 @@
 package com.itheima.bos.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,8 +23,28 @@ public class User implements java.io.Serializable {
 	private String telephone;
 	private String remark;
 	private Set noticebills = new HashSet(0);
-	private Set roles = new HashSet(0);
+	private Set<Role> roles = new HashSet(0);
 
+	//关联的角色
+	public String getRoleNames(){
+		String rolenames = "";
+		for(Role role : roles){
+			rolenames += role.getName()+" ";
+		}
+		return rolenames;
+	}
+	
+	//格式化日期
+	public String getBirthdayStr(){
+		if(birthday!=null){
+			String format = new SimpleDateFormat("yyy-MM-dd").format(birthday);
+			return format;
+		}
+		else{
+			return "暂无数据";
+		}
+	}
+	
 	// Constructors
 
 	/** default constructor */

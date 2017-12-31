@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 
+import com.itheima.bos.domain.Function;
 import com.itheima.bos.utils.PageBean;
 
 /**

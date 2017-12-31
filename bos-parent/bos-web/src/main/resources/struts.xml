@@ -28,7 +28,12 @@
 		<!-- 定义全局结果集 -->
 		<global-results>
 			<result name="login">/login.jsp</result>
+			<result name="unauthorized">/unauthorized.jsp</result>
 		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping result="unauthorized" exception="org.apache.shiro.authz.UnauthorizedException"></exception-mapping>
+		</global-exception-mappings>
 		
 		<!-- 需要进行权限控制的页面访问 -->
 		<action name="page_*_*">
@@ -38,6 +43,7 @@
 		<action name="userAction_*" class="userAction" method="{1}">
 			<result name="login">/login.jsp</result>
 			<result name="home">/index.jsp</result>
+			<result name="list">/WEB-INF/pages/admin/userlist.jsp</result>
 		</action>
 		<!-- 派送员 -->
 		<action name="staffAction_*" class="staffAction" method="{1}">
@@ -62,6 +68,14 @@
 		<!-- 业务通知单 -->
 		<action name="workordermanageAction_*" class="workordermanageAction" method="{1}">
 			<result name="list">/WEB-INF/pages/qupai/quickworkorder.jsp</result>
+		</action>
+		<!-- 权限管理 -->
+		<action name="functionAction_*" class="functionAction" method="{1}">
+			<result name="list">/WEB-INF/pages/admin/function.jsp</result>
+		</action>
+		<!-- 角色管理 -->
+		<action name="roleAction_*" class="roleAction" method="{1}">
+			<result name="list">/WEB-INF/pages/admin/role.jsp</result>
 		</action>
 	</package>
 </struts>

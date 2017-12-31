@@ -8,7 +8,7 @@ import com.itheima.bos.dao.IUserDao;
 import com.itheima.bos.dao.base.impl.BaseDaoImpl;
 import com.itheima.bos.domain.User;
 
-@Repository("UserDaoImpl")
+@Repository("userDaoImpl")
 public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao{
 
 	@Override

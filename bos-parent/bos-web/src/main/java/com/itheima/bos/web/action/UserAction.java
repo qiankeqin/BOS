@@ -138,4 +138,33 @@ public class UserAction extends BaseAction<User> {
 		ServletActionContext.getResponse().getWriter().write(f);
 		return NONE;
 	}
+	
+	//属性驱动，角色
+	private String[] roleIds;
+	
+	
+	public void setRoleIds(String[] roleIds) {
+		this.roleIds = roleIds;
+	}
+
+
+	/**
+	 * 新增用户
+	 * @return
+	 */
+	public String add(){
+		userService.add(model,roleIds);
+		return LIST;
+	}
+	
+	/**
+	 * 分页查询
+	 * @return
+	 * @throws IOException 
+	 */
+	public String pageQuery() throws IOException{
+		userService.pageQuery(pageBean);
+		this.java2Json(pageBean, new String[]{"noticebills","roles"});
+		return NONE;
+	}
 }
