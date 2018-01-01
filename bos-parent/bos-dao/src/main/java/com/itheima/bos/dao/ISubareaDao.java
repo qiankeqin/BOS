@@ -7,4 +7,6 @@ import com.itheima.bos.domain.Subarea;
 
 public interface ISubareaDao extends IBaseDao<Subarea>{
 
+	List<Object> findSubareaGroupByProvince();
+
 }

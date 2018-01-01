@@ -141,4 +141,15 @@ public class SubareaAction extends BaseAction<Subarea>{
 		return NONE;
 	}
 	
+	/**
+	 * 查询区域分区分布图数据
+	 * @return
+	 * @throws IOException 
+	 */
+	public String findSubareaGroupByProvince() throws IOException{
+		List<Object> list = subareaService.findSubareaGroupByProvince();
+		this.java2Json(list,new String[]{});
+		return NONE;
+	}
+	
 }

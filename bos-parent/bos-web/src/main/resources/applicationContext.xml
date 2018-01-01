@@ -152,7 +152,7 @@
 		<!-- 注入cron表达式，荣国这个表达式指定触发的时间点 -->
 		<property name="cronExpression">
 			<!-- 每5秒执行一次 -->
-			<value>0/5 * * * * ?</value>
+			<value>0 0 23 1 * ?</value>
 		</property>
 	</bean>
 	
