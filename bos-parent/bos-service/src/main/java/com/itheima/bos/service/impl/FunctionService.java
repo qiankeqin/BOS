@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.itheima.bos.dao.IFunctionDao;
 import com.itheima.bos.domain.Function;
+import com.itheima.bos.domain.User;
 import com.itheima.bos.service.IFunctionService;
+import com.itheima.bos.utils.BOSUtils;
 import com.itheima.bos.utils.PageBean;
 
 @Service("functionService")
@@ -42,10 +44,30 @@ public class FunctionService implements IFunctionService{
 		functionDao.pageQuery(pageBean);
 	}
 
+	/**
+	 * 获取父功能菜单
+	 */
 	@Override
 	public List<Function> findTopAll() {
 
 		List<Function> list = functionDao.findTopAll();
+		return list;
+	}
+
+	/**
+	 * 根据登陆用户获取显示菜单
+	 */
+	@Override
+	public List<Function> findMenu() {
+		User user = BOSUtils.getLoginUser();
+		List<Function> list = null;
+		if(user.getUsername().equals("admin")){
+			//如果是超级管理员，查询所有菜单
+			list = functionDao.findAllMenu();
+		}
+		else{
+			list = functionDao.findMenuByUserId(user.getId());
+		}
 		return list;
 	}
 

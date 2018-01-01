@@ -22,6 +22,15 @@ public class Function implements java.io.Serializable {
 	private Set roles = new HashSet(0);//当前权限对应的多个角色
 	private Set children = new HashSet(0);//当前权限的下级权限
 	
+	//private String pId;
+	//获取父元素Id，在左侧菜单需要层级关系，需要使用到pid
+	public String getpId(){
+		if(parentFunction==null){
+			return "0";
+		}else{
+			return parentFunction.getId();
+		}
+	}
 	
 	public Function() {
 		super();

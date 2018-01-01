@@ -1,0 +1,27 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../config/ehcache.xsd">
+	<!-- 磁盘存储，即操作系统的临时目录，根据操作系统的系统变量决定 -->
+    <diskStore path="java.io.tmpdir"/>
+
+  	<!-- 
+  		最多存储的元素个数
+  		缓存的数据是否一致有效
+  		空闲时间多久失效
+  		最长存活时间
+  		超过存储最大个数后是否存储到磁盘
+  		最大磁盘存储个数
+  		磁盘的元素是否持久化
+  		线程检查周期进行清除
+  		内存清除算法：最近最少使用首先清除
+  	 -->
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
+            />
+</ehcache>

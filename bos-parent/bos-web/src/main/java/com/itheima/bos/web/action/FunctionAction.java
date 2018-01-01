@@ -63,4 +63,15 @@ public class FunctionAction extends BaseAction<Function>{
 		this.java2Json(pageBean, new String[]{"parentFunction","roles","children"});
 		return NONE;
 	}
+	
+	/**
+	 * 获取菜单功能：根据当前登陆人查询对应的菜单数据，返回json
+	 * @return
+	 * @throws IOException 
+	 */
+	public String findMenu() throws IOException{
+		List<Function> menuList = functionService.findMenu();
+		this.java2Json(menuList, new String[]{"parentFunction","roles","children"});
+		return NONE;
+	}
 }

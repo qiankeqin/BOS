@@ -34,4 +34,25 @@ public class FunctionDao extends BaseDaoImpl<Function> implements IFunctionDao{
 		List<Function> list = (List<Function>) this.getHibernateTemplate().find(hql, id);
 		return list;
 	}
+
+	/**
+	 * 获取所有的显示菜单
+	 */
+	@Override
+	public List<Function> findAllMenu() {
+		String hql = "From Function f where f.generatemenu='1' ORDER BY f.zindex desc";
+		List<Function> list = (List<Function>) this.getHibernateTemplate().find(hql);
+		return list;
+	}
+
+	/**
+	 * 根据用户id，获取显示的菜单
+	 */
+	@Override
+	public List<Function> findMenuByUserId(String id) {
+		String hql = "select Distinct f From Function f LEFT OUTER JOIN f.roles r LEFT OUTER JOIN r.users u"
+				+ " where f.generatemenu='1' and u.id=? ORDER BY f.zindex desc";
+		List<Function> list = (List<Function>) this.getHibernateTemplate().find(hql, id);
+		return list;
+	}
 }
