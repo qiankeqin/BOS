@@ -128,5 +128,43 @@
 		<!-- 注入ehcache的配置文件 -->
 		<property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
 	</bean>
+	
+	<!-- 注册自定义作业类 -->
+	<bean id="myJob" class="com.itheima.bos.jobs.MailJob">
+		<!-- 注入用户名，密码，邮件服务器 -->
+		<property name="username" value="qiankeqin@163.com"></property>
+		<property name="password" value="xxxxxx"></property>
+		<property name="smtpServer" value="smtp.163.com"></property>
+	</bean>
+	
+	<!-- 配置JobDetail -->
+	<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 注入目标对象 -->
+		<property name="targetObject" ref="myJob"></property>
+		<!-- 注入目标方法 -->
+		<property name="targetMethod" value="execute"></property>
+	</bean>
+	
+	<!-- 配置触发器 -->
+	<bean id="myTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- 注入任务详情对象 -->
+		<property name="jobDetail" ref="jobDetail"></property>
+		<!-- 注入cron表达式，荣国这个表达式指定触发的时间点 -->
+		<property name="cronExpression">
+			<!-- 每5秒执行一次 -->
+			<value>0/5 * * * * ?</value>
+		</property>
+	</bean>
+	
+	<!-- 配置调度工厂 -->
+	<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- 注入触发器 -->
+		<property name="triggers">
+			<list>
+				<!-- 可以注入多个触发器 -->
+				<ref bean="myTrigger"/>
+			</list>
+		</property>
+	</bean>
 </beans>					
 						
